@@ -1,0 +1,89 @@
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>一科日常</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<link rel="stylesheet" href="style.css">
+	</head>
+	
+	<body>
+		<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+	<header style="background-color: #16a598;">
+		<div class="container" >
+			<div class=" ">
+				<h2>音檔時間切割器</h2>
+					<div class='function'>
+ 								<div class="form-group">
+									<input id="minute"><label>分</label>
+									<input id="second"><label>秒</label>
+								</div>
+
+					 			<div>	
+					 				<label>分配人數</label>
+					 				<input id="divided">
+					 				<label>人</label>
+					 			</div>
+
+					 			<div>
+					 				<button id="calculate">計算</button>
+									<button id="reset">重置</button>
+									<br></br>
+									<p id="result"></p>
+								</div>					
+					</div>
+			</div>
+		</div>
+	</header>
+	<script>
+	$("#calculate").click(function(){
+	var min = parseInt($("#minute").val());
+  var sec = parseInt($("#second").val());
+  var divided = parseInt($("#divided").val());
+  
+  var totalSec = min*60 + sec;
+  var left = totalSec % divided;
+  var neatSec = totalSec - left;
+  var partial = neatSec / divided;
+  
+  for (var i=0;i<divided;i++)
+{
+	if(i === 0){
+  	$("#result").append("第1份:"+secondsToMinutes(partial+left)+"<br>");
+  } else {
+  	$("#result").append("第"+(i+1)+"份:"+secondsToMinutes(partial)+"<br>");
+  }
+  
+  
+}
+  
+});
+
+$("#reset").click(function(){
+	$("input").val("");
+  $("#result").text("");
+
+});
+
+function secondsToMinutes(time){
+    return Math.floor(time / 60)+':'+padLeft(Math.floor(time % 60),2)  ;
+}
+
+function padLeft(str, len) {
+    str = '' + str;
+    return str.length >= len ? str : new Array(len - str.length + 1).join("0") + str;
+}
+	</script>
+</body>
