@@ -49,26 +49,27 @@
 	</header>
 	<script>
 	$("#calculate").click(function(){
-	var min = parseInt($("#minute").val());
-  var sec = parseInt($("#second").val());
-  var divided = parseInt($("#divided").val());
+
+		$("#result").text("");
+		var min = parseInt($("#minute").val());
+  		var sec = parseInt($("#second").val());
+  		var divided = parseInt($("#divided").val());
   
-  var totalSec = min*60 + sec;
-  var left = totalSec % divided;
-  var neatSec = totalSec - left;
-  var partial = neatSec / divided;
+  		var totalSec = min*60 + sec;
+  		var left = totalSec % divided;
+  		var neatSec = totalSec - left;
+  		var partial = neatSec / divided;
   
-  for (var i=0;i<divided;i++)
-{
-	if(i === 0){
-  	$("#result").append("第1人:0:00-"+secondsToMinutes(partial+left)+"(總長"+secondsToMinutes(partial+left)+")"+"<br>");
-  } else {
-  	$("#result").append("第"+(i+1)+"人:"+secondsToMinutes(partial+left+(i-1)*partial)+"-"+secondsToMinutes(partial+left+i*partial)+"(總長"+secondsToMinutes(partial)+")"+"<br>");
-  }
+  		for (var i=0;i<divided;i++)
+		{
+			if(i === 0){
+  				$("#result").append("第1人:0:00-"+secondsToMinutes(partial+left)+"(總長"+secondsToMinutes(partial+left)+")"+"<br>");
+  		} else {
+  			$("#result").append("第"+(i+1)+"人:"+secondsToMinutes(partial+left+(i-1)*partial)+"-"+secondsToMinutes(partial+left+i*partial)+"(總長"+secondsToMinutes(partial)+")"+"<br>");
+  		}
   
   
-}
-  
+	}
 });
 
 $("#reset").click(function(){
