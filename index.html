@@ -41,7 +41,8 @@
 					 			<div>
 					 				<button id="calculate">計算</button>
 									<button id="reset">重置</button>
-                  <button id="copyBtn" data-clipboard-target="#result">分享到Line</button>
+                  <button id="copyBtn" data-clipboard-target="#result">複製結果</button>
+                  <div class="alert-box success">複製成功！</div>
 
 									<br></br>
 									<p id="result"></p>
@@ -140,10 +141,7 @@ function padLeft(str, len) {
 }
 
 clipboard.on('success', function(e) {
-    // alert("複製成功!");
-    console.log('http://line.naver.jp/R/msg/text/?'+ $("#result").text());
-    // console.log('http://line.naver.jp/R/msg/text/?'+ $("#result").text);
-    //window.location.href = 'http://line.naver.jp/R/msg/text/?'+ $("#result").text;
+   $( "div.success" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
 });
 
 clipboard.on('error', function(e) {
