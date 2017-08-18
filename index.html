@@ -21,6 +21,7 @@
   src="https://code.jquery.com/jquery-2.2.4.min.js"
   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
   crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
 	<header style="background-color: #16a598;">
 		<div class="container" >
 			<div class=" ">
@@ -40,6 +41,8 @@
 					 			<div>
 					 				<button id="calculate">計算</button>
 									<button id="reset">重置</button>
+                  <button id="copyBtn" data-clipboard-target="#result">分享到Line</button>
+
 									<br></br>
 									<p id="result"></p>
 								</div>					
@@ -48,6 +51,9 @@
 		</div>
 	</header>
 	<script>
+
+  var clipboard = new Clipboard('#copyBtn');
+
 $("#calculate").click(function(){
 
 	$("#result").text("");
@@ -132,5 +138,16 @@ function padLeft(str, len) {
     str = '' + str;
     return str.length >= len ? str : new Array(len - str.length + 1).join("0") + str;
 }
+
+clipboard.on('success', function(e) {
+    // alert("複製成功!");
+    console.log('http://line.naver.jp/R/msg/text/?'+ $("#result").text);
+    window.location.href = 'http://line.naver.jp/R/msg/text/?'+ $("#result").text;
+});
+
+clipboard.on('error', function(e) {
+    console.error('Action:', e.action);
+    console.error('Trigger:', e.trigger);
+});
 	</script>
 </body>
