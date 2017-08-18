@@ -48,28 +48,74 @@
 		</div>
 	</header>
 	<script>
-	$("#calculate").click(function(){
+$("#calculate").click(function(){
 
-		$("#result").text("");
-		var min = parseInt($("#minute").val());
-  		var sec = parseInt($("#second").val());
-  		var divided = parseInt($("#divided").val());
+	$("#result").text("");
   
-  		var totalSec = min*60 + sec;
-  		var left = totalSec % divided;
-  		var neatSec = totalSec - left;
-  		var partial = neatSec / divided;
+	var min = parseInt($("#minute").val());
+  var sec = parseInt($("#second").val());
+  var divided = parseInt($("#divided").val());
   
-  		for (var i=0;i<divided;i++)
-		{
-			if(i === 0){
-  				$("#result").append("第1人:0:00-"+secondsToMinutes(partial+left)+"(總長"+secondsToMinutes(partial+left)+")"+"<br>");
-  		} else {
-  			$("#result").append("第"+(i+1)+"人:"+secondsToMinutes(partial+left+(i-1)*partial)+"-"+secondsToMinutes(partial+left+i*partial)+"(總長"+secondsToMinutes(partial)+")"+"<br>");
-  		}
+  var totalSec = min*60 + sec;
+  var left = totalSec % 15;
+  var neatSec = totalSec - left;
+  console.log(neatSec);
+  var fifteenPartial = neatSec / 15;
+  var leftPartial = fifteenPartial % divided;
+  var neatPartial = fifteenPartial - leftPartial;
+  var finalPartial = neatPartial / divided;
+  var partialSec = finalPartial*15;
+  
+  var firstPartial = partialSec+left+leftPartial*15;
+ 
+ 	var partialArray = [];
   
   
-	}
+  for (var i=0; i<divided;i++)
+  {
+  	var totalSec = 0;
+  	if(leftPartial > 0)
+    {
+    	totalSec += 15;
+ 			leftPartial --;
+    }
+    totalSec += partialSec;
+    if(i === 0)
+    {
+    	partialArray[i] = {
+    	"end" : totalSec,
+    	"length" : totalSec
+    	};
+    } else if(i === divided - 1)
+    {
+      totalSec += left;
+    	partialArray[i] = {
+    	"end" : partialArray[i-1]["end"] + totalSec ,
+    	"length" : totalSec
+    	};
+
+    } else {
+     partialArray[i] = {
+    	"end" : partialArray[i-1]["end"] + totalSec ,
+    	"length" : totalSec
+    	};
+    }
+  }
+  
+ 
+  for (var i=0;i<partialArray.length;i++)
+{
+	if(i === 0){
+  	$("#result").append("第1人:0:00-"+secondsToMinutes(partialArray[i]["end"])+"(總長"+secondsToMinutes(partialArray[i]["length"])+")"+"<br>");
+
+    
+  } else {
+  	$("#result").append("第"+(i+1)+"人:"+secondsToMinutes(partialArray[i-1]["end"])+"-"+secondsToMinutes(partialArray[i]["end"])+"(總長"+secondsToMinutes(partialArray[i]["length"])+")"+"<br>");
+    
+    
+  }
+}
+  
 });
 
 $("#reset").click(function(){
