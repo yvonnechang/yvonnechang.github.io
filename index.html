@@ -141,8 +141,9 @@ function padLeft(str, len) {
 
 clipboard.on('success', function(e) {
     // alert("複製成功!");
-    console.log('http://line.naver.jp/R/msg/text/?'+ $("#result").text);
-    window.location.href = 'http://line.naver.jp/R/msg/text/?'+ $("#result").text;
+    console.log('http://line.naver.jp/R/msg/text/?'+ $("#result").text());
+    // console.log('http://line.naver.jp/R/msg/text/?'+ $("#result").text);
+    //window.location.href = 'http://line.naver.jp/R/msg/text/?'+ $("#result").text;
 });
 
 clipboard.on('error', function(e) {
