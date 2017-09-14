@@ -15,7 +15,7 @@
 	<meta property="og:description" content=""/>
 	<link rel="stylesheet" href="style.css">
 	</head>
-	
+
 	<body>
 		<script
   src="https://code.jquery.com/jquery-2.2.4.min.js"
@@ -32,7 +32,7 @@
 									<input id="second"><label>秒</label>
 								</div>
 
-					 			<div>	
+					 			<div>
 					 				<label>分配人數</label>
 					 				<input id="divided">
 					 				<label>人</label>
@@ -46,7 +46,7 @@
 
 									<br></br>
 									<p id="result"></p>
-								</div>					
+								</div>
 					</div>
 			</div>
 		</div>
@@ -58,11 +58,19 @@
 $("#calculate").click(function(){
 
 	$("#result").text("");
-  
+
 	var min = parseInt($("#minute").val());
   var sec = parseInt($("#second").val());
   var divided = parseInt($("#divided").val());
-  
+
+	if (!min) {
+		min = 0;
+	}
+
+	if (!sec) {
+		sec = 0;
+	}
+
   var totalSec = min*60 + sec;
   var left = totalSec % 15;
   var neatSec = totalSec - left;
@@ -72,12 +80,12 @@ $("#calculate").click(function(){
   var neatPartial = fifteenPartial - leftPartial;
   var finalPartial = neatPartial / divided;
   var partialSec = finalPartial*15;
-  
+
   var firstPartial = partialSec+left+leftPartial*15;
- 
+
  	var partialArray = [];
-  
-  
+
+
   for (var i=0; i<divided;i++)
   {
   	var totalSec = 0;
@@ -108,21 +116,21 @@ $("#calculate").click(function(){
     	};
     }
   }
-  
- 
+
+
   for (var i=0;i<partialArray.length;i++)
 {
 	if(i === 0){
   	$("#result").append("第1人:0:00-"+secondsToMinutes(partialArray[i]["end"])+"(總長"+secondsToMinutes(partialArray[i]["length"])+")"+"<br>");
 
-    
+
   } else {
   	$("#result").append("第"+(i+1)+"人:"+secondsToMinutes(partialArray[i-1]["end"])+"-"+secondsToMinutes(partialArray[i]["end"])+"(總長"+secondsToMinutes(partialArray[i]["length"])+")"+"<br>");
-    
-    
+
+
   }
 }
-  
+
 });
 
 $("#reset").click(function(){
