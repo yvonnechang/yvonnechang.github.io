@@ -278,11 +278,11 @@ $("#reset2").click(function(){
 });
 
 function secondToHours(time){
-    return {'hour':Math.floor(time / 3600), 'minute':padLeft(Math.floor(time % 3600),2)}  ;
+    return {'hour':padLeft(Math.floor(time / 3600),2), 'minute':padLeft(Math.floor(time % 3600),2)}  ;
 }
 
 function secondsToMinutes(time){
-    return Math.floor(time / 60)+':'+padLeft(Math.floor(time % 60),2)  ;
+    return padLeft(Math.floor(time / 60),2)+':'+padLeft(Math.floor(time % 60),2)  ;
 }
 
 function padLeft(str, len) {
