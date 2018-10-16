@@ -53,11 +53,13 @@
 				<h2>音檔時間切割器2</h2>
 					<div class='function'>
  								<div class="form-group">
+									<input id="start-hour"><label>起始時</label>
 									<input id="start-minute"><label>起始分</label>
 									<input id="start-second"><label>起始秒</label>
 
 								</div>
 								<div class="form-group">
+									<input id="end-hour"><label>結束時</label>
 									<input id="end-minute"><label>結束分</label>
 									<input id="end-second"><label>結束秒</label>
 								</div>
@@ -171,11 +173,20 @@ $("#calculate2").click(function(){
 
 	$("#result2").text("");
 
+	var starthr = parseInt($("#start-hour").val());
 	var startmin = parseInt($("#start-minute").val());
   var startsec = parseInt($("#start-second").val());
+	var endhr = parseInt($("#end-hour").val());
 	var endmin = parseInt($("#end-minute").val());
   var endsec = parseInt($("#end-second").val());
   var divided2 = parseInt($("#divided2").val());
+
+	if (!starthr) {
+		starthr = 0;
+	}
+	if (!endhr) {
+		endhr = 0;
+	}
 
 	if (!startmin) {
 		startmin = 0;
@@ -190,7 +201,7 @@ $("#calculate2").click(function(){
 		endsec = 0;
 	}
 
-  var totalSec = endmin*60 + endsec - startmin*60 - startsec;
+  var totalSec = endhr*3600 + endmin*60 + endsec - starthr*3600 - startmin*60 - startsec;
   var left = totalSec % 15;
   var neatSec = totalSec - left;
   console.log(neatSec);
@@ -240,11 +251,11 @@ $("#calculate2").click(function(){
   for (var i=0;i<partialArray.length;i++)
 {
 	if(i === 0){
-  	$("#result2").append("第1人:"+startmin+":"+startsec+"-"+secondsToMinutes(partialArray[i]["end"]+startmin*60 + startsec)+"(總長"+secondsToMinutes(partialArray[i]["length"])+")"+"<br>");
+  	$("#result2").append("第1人:"+starthr+":"+startmin+":"+startsec+"-"+secondToHours(partialArray[i]["end"] + starthr*3600 + startmin*60 + startsec)['hour']+":"+secondsToMinutes(secondToHours(partialArray[i]["end"] + starthr*3600 + startmin*60 + startsec)['minute'])+"(總長"+secondsToMinutes(partialArray[i]["length"])+")"+"<br>");
 
 
   } else {
-  	$("#result2").append("第"+(i+1)+"人:"+secondsToMinutes(partialArray[i-1]["end"]+startmin*60 + startsec)+"-"+secondsToMinutes(partialArray[i]["end"]+startmin*60 + startsec)+"(總長"+secondsToMinutes(partialArray[i]["length"])+")"+"<br>");
+  	$("#result2").append("第"+(i+1)+"人:"+secondToHours(partialArray[i-1]["end"] + starthr*3600 + startmin*60 + startsec)['hour']+":"+secondsToMinutes(secondToHours(partialArray[i-1]["end"] + starthr*3600 + startmin*60 + startsec)['minute'])+"-"+secondToHours(partialArray[i]["end"] + starthr*3600 + startmin*60 + startsec)['hour']+":"+secondsToMinutes(secondToHours(partialArray[i]["end"]+ starthr*3600 + startmin*60 + startsec)['minute'])+"(總長"+secondsToMinutes(partialArray[i]["length"])+")"+"<br>");
 
 
   }
@@ -265,6 +276,10 @@ $("#reset2").click(function(){
   $("#result2").text("");
 
 });
+
+function secondToHours(time){
+    return {'hour':Math.floor(time / 3600), 'minute':padLeft(Math.floor(time % 3600),2)}  ;
+}
 
 function secondsToMinutes(time){
     return Math.floor(time / 60)+':'+padLeft(Math.floor(time % 60),2)  ;
