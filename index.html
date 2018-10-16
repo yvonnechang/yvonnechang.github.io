@@ -251,7 +251,7 @@ $("#calculate2").click(function(){
   for (var i=0;i<partialArray.length;i++)
 {
 	if(i === 0){
-  	$("#result2").append("第1人:"+starthr+":"+startmin+":"+startsec+"-"+secondToHours(partialArray[i]["end"] + starthr*3600 + startmin*60 + startsec)['hour']+":"+secondsToMinutes(secondToHours(partialArray[i]["end"] + starthr*3600 + startmin*60 + startsec)['minute'])+"(總長"+secondsToMinutes(partialArray[i]["length"])+")"+"<br>");
+  	$("#result2").append("第1人:"+padLeft(starthr,2)+":"+padLeft(startmin,2)+":"+padLeft(startsec,2)+"-"+secondToHours(partialArray[i]["end"] + starthr*3600 + startmin*60 + startsec)['hour']+":"+secondsToMinutes(secondToHours(partialArray[i]["end"] + starthr*3600 + startmin*60 + startsec)['minute'])+"(總長"+secondsToMinutes(partialArray[i]["length"])+")"+"<br>");
 
 
   } else {
